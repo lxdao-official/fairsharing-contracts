@@ -17,6 +17,7 @@ contract FairSharing is ERC20, Ownable, DAO {
     // Array to store the list of member addresses. Contain both active and inactive members
     address[] public membersList;
     uint totalMembers;
+    address public contractAddr;
 
     mapping(uint => bool) public claimed;
 
@@ -29,13 +30,16 @@ contract FairSharing is ERC20, Ownable, DAO {
     constructor(
         string memory name,
         string memory symbol,
-        address[] memory _membersList
+        address[] memory _membersList,
+        address owner
     ) ERC20(name, symbol) {
         // TODO DAO.initialize(xxx)
         membersList = _membersList;
         for (uint i = 0; i < _membersList.length; i++) {
             members[_membersList[i]] = true;
         }
+        _transferOwnership(owner);
+        contractAddr = address(this);
     }
 
     function addMember(address member) external onlyOwner {

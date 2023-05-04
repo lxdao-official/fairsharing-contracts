@@ -19,7 +19,8 @@ describe('FairSharing', function () {
     const fairSharing = await FairSharing.deploy(
       'TokenName',
       'TokenSymbol',
-      members
+      members,
+      owner.address
     );
 
     return { fairSharing, owner, otherAccounts };

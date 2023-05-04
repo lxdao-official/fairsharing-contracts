@@ -3,7 +3,9 @@
   "private": true,
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "verify:mumbai": "npx hardhat verify YOURCONTRACT --network mumbai",
+    "verify:mumbai:instance": "npx hardhat verify YOURCONTRACT --constructor-args args.json --network mumbai"
   },
   "repository": {
     "type": "git",
@@ -21,6 +23,7 @@
   },
   "dependencies": {
     "@aragon/osx": "^1.2.0",
-    "@openzeppelin/contracts": "^4.8.3"
+    "@openzeppelin/contracts": "^4.8.3",
+    "dotenv": "^16.0.3"
   }
 }

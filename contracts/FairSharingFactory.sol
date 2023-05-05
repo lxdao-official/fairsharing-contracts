@@ -12,7 +12,16 @@ contract FairSharingFactory {
         address[] memory membersList,
         address owner
     ) external {
-        FairSharing fairSharing = new FairSharing(name, symbol, membersList, owner);
+        FairSharing fairSharing = new FairSharing(
+            name,
+            symbol,
+            membersList,
+            owner
+        );
         fairSharings.push(fairSharing);
+    }
+
+    function getCount() external view returns (uint256) {
+        return fairSharings.length;
     }
 }

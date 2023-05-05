@@ -11,7 +11,8 @@ async function main() {
   const fairSharing = await FairSharing.deploy(
     'TokenName',
     'TokenSymbol',
-    members
+    members,
+    signers[0].address
   );
 
   await fairSharing.deployed();

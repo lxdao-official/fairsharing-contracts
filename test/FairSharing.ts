@@ -31,15 +31,14 @@ describe('FairSharing', function () {
         deployFairSharingFixture
       );
       const contributor = otherAccounts[0];
-      // todo use string
-      const contributionId = 1;
+      const contributionId = ethers.utils.formatBytes32String("1");
       const points = utils.parseEther('1');
       const votes = await Promise.all(
         otherAccounts.slice(0, 2).map(async (voterAccount) => {
           const voter = await voterAccount.getAddress();
           const approve = true;
           const msgHash = utils.solidityKeccak256(
-            ['address', 'uint256', 'address', 'bool', 'uint256'],
+            ['address', 'bytes32', 'address', 'bool', 'uint256'],
             [contributor.address, contributionId, voter, approve, points]
           );
           const signature = await voterAccount.signMessage(
@@ -62,7 +61,7 @@ describe('FairSharing', function () {
       const { fairSharing, owner, otherAccounts } = await loadFixture(
         deployFairSharingFixture
       );
-      const contributionId = 1;
+      const contributionId = ethers.utils.formatBytes32String("1");
       const contributor = otherAccounts[0];
       const points = utils.parseEther('1');
       const votes = await Promise.all(
@@ -70,7 +69,7 @@ describe('FairSharing', function () {
           const voter = await voterAccount.getAddress();
           const approve = true;
           const msgHash = utils.solidityKeccak256(
-            ['address', 'uint256', 'address', 'bool', 'uint256'],
+            ['address', 'bytes32', 'address', 'bool', 'uint256'],
             [contributor.address, contributionId, voter, approve, points]
           );
           const signature = await voterAccount.signMessage(
@@ -94,7 +93,7 @@ describe('FairSharing', function () {
       const { fairSharing, otherAccounts } = await loadFixture(
         deployFairSharingFixture
       );
-      const contributionId = 1;
+      const contributionId = ethers.utils.formatBytes32String("1");
       const contributor = otherAccounts[0];
       const points = utils.parseEther('1');
       const votes = await Promise.all(
@@ -102,7 +101,7 @@ describe('FairSharing', function () {
           const voter = await voterAccount.getAddress();
           const approve = true;
           const msgHash = utils.solidityKeccak256(
-            ['address', 'uint256', 'address', 'bool', 'uint256'],
+            ['address', 'bytes32', 'address', 'bool', 'uint256'],
             [contributor.address, contributionId, voter, approve, points]
           );
           const signature = await voterAccount.signMessage(
@@ -131,7 +130,7 @@ describe('FairSharing', function () {
       const { fairSharing, otherAccounts } = await loadFixture(
         deployFairSharingFixture
       );
-      const contributionId = 1;
+      const contributionId = ethers.utils.formatBytes32String("1");
       const contributor = otherAccounts[0];
       const points = utils.parseEther('1');
       const votes = await Promise.all(
@@ -139,7 +138,7 @@ describe('FairSharing', function () {
           const voter = await voterAccount.getAddress();
           const approve = true;
           const msgHash = utils.solidityKeccak256(
-            ['address', 'uint256', 'address', 'bool', 'uint256'],
+            ['address', 'bytes32', 'address', 'bool', 'uint256'],
             [contributor.address, contributionId, voter, approve, points]
           );
           const signature = await voterAccount.signMessage(
@@ -169,20 +168,17 @@ describe('FairSharing', function () {
   describe('Sharing', function () {
     const claim = async (
       fairSharing: FairSharing,
-      contributionId: number,
+      contributionId: string,
       points: BigNumber,
       voters: SignerWithAddress[],
       contributor: SignerWithAddress
     ) => {
-      // const contributionId = 1;
-      // const contributor = otherAccounts[0];
-      // const points = utils.parseEther("1");
       const votes = await Promise.all(
         voters.map(async (voterAccount) => {
           const voter = await voterAccount.getAddress();
           const approve = true;
           const msgHash = utils.solidityKeccak256(
-            ['address', 'uint256', 'address', 'bool', 'uint256'],
+            ['address', 'bytes32', 'address', 'bool', 'uint256'],
             [contributor.address, contributionId, voter, approve, points]
           );
           const signature = await voterAccount.signMessage(
@@ -204,7 +200,6 @@ describe('FairSharing', function () {
       await tx.wait();
 
       const claimedToken = await fairSharing.balanceOf(claimer.address);
-      console.log('wtf claimedToken', claimer.address, claimedToken);
 
       expect(claimedToken.eq(points)).to.be.true;
     };
@@ -221,12 +216,9 @@ describe('FairSharing', function () {
 
       const balanceBefore1 = await member1.getBalance();
       const balanceBefore2 = await member2.getBalance();
-      console.log('balanceBefore1', balanceBefore1);
 
-      console.log('member1 address', member1.address);
-
-      await claim(fairSharing, 1, points1, otherAccounts.slice(0, 2), member1);
-      await claim(fairSharing, 2, points2, otherAccounts.slice(0, 2), member2);
+      await claim(fairSharing, ethers.utils.formatBytes32String("1"), points1, otherAccounts.slice(0, 2), member1);
+      await claim(fairSharing, ethers.utils.formatBytes32String("2"), points2, otherAccounts.slice(0, 2), member2);
 
       const tx = await fairSharing.sharing({ value: utils.parseEther('9') });
       await tx.wait();

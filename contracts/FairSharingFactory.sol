@@ -3,6 +3,8 @@ pragma solidity ^0.8.17;
 
 import "./FairSharing.sol";
 
+// todo add DAO creation event
+// todo make it upgradable
 contract FairSharingFactory {
     FairSharing[] public fairSharings;
 

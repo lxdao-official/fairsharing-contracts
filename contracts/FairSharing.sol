@@ -54,6 +54,7 @@ contract FairSharing is ERC20, Ownable, DAO {
     }
 
     function claim(
+        // todo use string
         uint contributionId,
         uint points,
         Vote[] calldata votes

@@ -31,6 +31,7 @@ describe('FairSharing', function () {
         deployFairSharingFixture
       );
       const contributor = otherAccounts[0];
+      // todo use string
       const contributionId = 1;
       const points = utils.parseEther('1');
       const votes = await Promise.all(

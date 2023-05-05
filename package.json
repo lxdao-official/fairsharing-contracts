@@ -3,7 +3,7 @@
   "private": true,
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npx hardhat test --network hardhat",
     "verify:mumbai": "npx hardhat verify YOURCONTRACT --network mumbai",
     "verify:mumbai:instance": "npx hardhat verify YOURCONTRACT --constructor-args args.json --network mumbai"
   },

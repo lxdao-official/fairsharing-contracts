@@ -11,3 +11,9 @@ REPORT_GAS=true npx hardhat test
 npx hardhat node
 npx hardhat run scripts/deploy.ts
 ```
+
+## Deploy
+`npx hardhat deploy --network mumbai`
+
+## Export ABI
+`npx hardhat export --export abi/mumbai.json --network mumbai`

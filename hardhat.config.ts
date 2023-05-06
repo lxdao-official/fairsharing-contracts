@@ -20,7 +20,7 @@ const config: HardhatUserConfig = {
     hardhat: {},
     mumbai: {
       url: process.env.POLYGON_MUMBAI_RPC_PROVIDER,
-      accounts: [process.env.PRIVATE_KEY],
+      accounts: [process.env.PRIVATE_KEY!],
     },
   },
   etherscan: {

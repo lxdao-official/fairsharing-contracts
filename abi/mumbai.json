@@ -3,7 +3,7 @@
   "chainId": "80001",
   "contracts": {
     "FairSharingFactory": {
-      "address": "0x368538EB8b46dDA8B986aCb7Ec6A065f1AbEADFF",
+      "address": "0x3d9Aa53448Ff6f399b8Fb92045bdE152F626042e",
       "abi": [
         {
           "inputs": [

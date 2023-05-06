@@ -37,6 +37,7 @@ contract FairSharing is ERC20, Ownable, DAO {
         membersList = _membersList;
         for (uint i = 0; i < _membersList.length; i++) {
             members[_membersList[i]] = true;
+            totalMembers++;
         }
         _transferOwnership(owner);
         contractAddr = address(this);

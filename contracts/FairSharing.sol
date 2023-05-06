@@ -18,8 +18,8 @@ contract FairSharing is ERC20, Ownable, DAO {
     address[] public membersList;
     uint totalMembers;
     address public contractAddr;
-
-    mapping(uint => bool) public claimed;
+    // Mapping from contributionId => claimed status
+    mapping(bytes32 => bool) public claimed;
 
     struct Vote {
         address voter;
@@ -54,8 +54,7 @@ contract FairSharing is ERC20, Ownable, DAO {
     }
 
     function claim(
-        // todo use string
-        uint contributionId,
+        bytes32 contributionId,
         uint points,
         Vote[] calldata votes
     ) external {

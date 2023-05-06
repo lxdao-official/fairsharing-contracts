@@ -54,7 +54,7 @@ describe('FairSharing', function () {
 
       await expect(
         fairSharing.claim(contributionId, points, votes)
-      ).to.be.revertedWith('Not a member');
+      ).to.be.revertedWith('Only member can claim');
     });
 
     it('Caller should be the contributor', async function () {

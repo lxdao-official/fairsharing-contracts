@@ -1,6 +1,6 @@
 import { HardhatUserConfig } from 'hardhat/config';
 import '@nomicfoundation/hardhat-toolbox';
-import "hardhat-deploy"
+import 'hardhat-deploy';
 
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -20,7 +20,7 @@ const config: HardhatUserConfig = {
     hardhat: {},
     mumbai: {
       url: process.env.POLYGON_MUMBAI_RPC_PROVIDER,
-      accounts: [],
+      accounts: [process.env.PRIVATE_KEY],
     },
   },
   etherscan: {

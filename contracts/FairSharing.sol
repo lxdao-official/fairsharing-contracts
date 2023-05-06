@@ -16,7 +16,6 @@ contract FairSharing is ERC20, Ownable, DAO {
     mapping(address => bool) public members;
     // Array to store the list of member addresses. Contain both active and inactive members
     address[] public membersList;
-    uint totalMembers;
     address public contractAddr;
     // Mapping from contributionId => claimed status
     mapping(bytes32 => bool) public claimed;
@@ -42,15 +41,17 @@ contract FairSharing is ERC20, Ownable, DAO {
         contractAddr = address(this);
     }
 
+    function getMembersListLength() public view returns (uint) {
+        return membersList.length;
+    }
+
     function addMember(address member) external onlyOwner {
         members[member] = true;
         membersList.push(member);
-        totalMembers++;
     }
 
     function removeMember(address member) external onlyOwner {
         members[member] = false;
-        totalMembers--;
     }
 
     function claim(
@@ -78,7 +79,7 @@ contract FairSharing is ERC20, Ownable, DAO {
                 approvedVotes++;
             }
         }
-        require(approvedVotes >= totalMembers / 2, "Not enough voters");
+        require(approvedVotes >= membersList.length / 2, "Not enough voters");
 
         _mint(msg.sender, points);
         claimed[contributionId] = true;

@@ -60,7 +60,7 @@ contract FairSharing is ERC20, Ownable, DAO {
         Vote[] calldata votes
     ) external {
         require(!claimed[contributionId], "Already claimed");
-        require(members[msg.sender], "Not a member");
+        require(members[msg.sender], "Only member can claim");
         uint approvedVotes;
         // TODO: remove duplicated vote?
         for (uint i = 0; i < votes.length; i++) {

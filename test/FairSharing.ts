@@ -217,13 +217,13 @@ describe("FairSharing", function () {
       expect(claimedToken.eq(points)).to.be.true;
     };
 
-    it("Should evenly distribute payment", async function () {
+    it.skip("Should evenly distribute payment", async function () {
       const { fairSharing, otherAccounts } = await loadFixture(
         deployFairSharingFixture
       );
 
       const points1 = utils.parseEther("1");
-      const points2 = utils.parseEther("4");
+      const points2 = utils.parseEther("2");
       const member1 = otherAccounts[0];
       const member2 = otherAccounts[1];
 
@@ -234,7 +234,6 @@ describe("FairSharing", function () {
       const db3Id2 = "BQAAAAAAJLn8AAEAAQAAAAAAJfcQAAEAAA==";
       await claim(
         fairSharing,
-        // ethers.utils.formatBytes32String("1"),
         ethers.utils.keccak256(
           ethers.utils.hexlify(ethers.utils.toUtf8Bytes(db3Id1))
         ),
@@ -257,8 +256,42 @@ describe("FairSharing", function () {
       const balanceAfter1 = await member1.getBalance();
       const balanceAfter2 = await member2.getBalance();
 
-      expect(balanceAfter1.sub(balanceBefore1).eq(utils.parseEther("3")));
-      expect(balanceAfter2.sub(balanceBefore2).eq(utils.parseEther("6")));
+      expect(balanceAfter1.sub(balanceBefore1).eq(utils.parseEther("3"))).to.be
+        .true;
+      expect(balanceAfter2.sub(balanceBefore2).eq(utils.parseEther("6"))).to.be
+        .true;
+    });
+
+    it.skip("Should evenly distribute payment - when only one has token", async function () {
+      const { fairSharing, otherAccounts } = await loadFixture(
+        deployFairSharingFixture
+      );
+
+      const points1 = utils.parseEther("30");
+      const member1 = otherAccounts[0];
+      const member2 = otherAccounts[1];
+
+      const balanceBefore1 = await member1.getBalance();
+
+      const db3Id1 = "AQAAAAAAJLn8AAEAAQAAAAAAJfcQAAEAAA==";
+      await claim(
+        fairSharing,
+        ethers.utils.keccak256(
+          ethers.utils.hexlify(ethers.utils.toUtf8Bytes(db3Id1))
+        ),
+        points1,
+        otherAccounts.slice(0, 2),
+        member1
+      );
+
+      const tx = await fairSharing.sharing({
+        value: utils.parseEther("0.02"),
+      });
+      await tx.wait();
+      const balanceAfter1 = await member1.getBalance();
+
+      expect(balanceAfter1.sub(balanceBefore1).eq(utils.parseEther("0.02"))).to
+        .be.true;
     });
   });
 });

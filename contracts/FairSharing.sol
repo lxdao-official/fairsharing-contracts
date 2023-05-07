@@ -92,15 +92,19 @@ contract FairSharing is ERC20, Ownable, DAO {
                 totalToken += balanceOf(membersList[i]);
             }
         }
-        uint valuePerToken = msg.value / totalToken;
 
         for (uint i = 0; i < membersList.length; i++) {
             if (members[membersList[i]]) {
                 (bool success, ) = membersList[i].call{
-                    value: valuePerToken * balanceOf(membersList[i])
+                    value: (msg.value * balanceOf(membersList[i])) / totalToken
                 }("");
                 require(success, "Transfer failed");
             }
         }
+    }
+
+    function withdraw() external onlyOwner {
+        uint256 balance = address(this).balance;
+        payable(owner()).transfer(balance);
     }
 }
